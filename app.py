@@ -44,10 +44,17 @@ def handle_message(event):
     print("event.reply_token:", event.reply_token)
     print("event.message.text:", event.message.text)
 
-    line_bot_api.reply_message(
-        event.reply_token,
-        TextSendMessage(text=event.message.text)
-    )
+    if(event.message.text == "電影"):
+        line_bot_api.reply_message(
+            event.reply_token,
+            TextSendMessage(text=日新)
+        )
+    else:
+        line_bot_api.reply_message(
+            event.reply_token,
+            TextSendMessage(text=event.message.text)
+        )
+
 
 
 if __name__ == '__main__':
