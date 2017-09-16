@@ -47,7 +47,7 @@ def handle_message(event):
     if(event.message.text == "電影"):
         line_bot_api.reply_message(
             event.reply_token,
-            TextSendMessage(text=日新)
+            TextSendMessage(text="日新")
         )
     else:
         line_bot_api.reply_message(
