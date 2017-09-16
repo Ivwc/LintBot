@@ -19,9 +19,6 @@ config.read("config.ini")
 line_bot_api = LineBotApi('r7uHxtXwtjDXYHoAWazEgWw93ZBdr5+m5kiyLPp2aGKA1KXxlzrvMvDyz8WVWhfk7tzeX5l3Q+Etrr4pA8ezmg7QYKQ70c27UMG/ZatLlvyIIqmnNHq3l6BmHCNsVfpuzEjMPUjOb/XRTZ8LsHW+JgdB04t89/1O/w1cDnyilFU=')
 handler = WebhookHandler('b334451f4eaeabb48c0050a013167f01')
 
-
-
-
 @app.route("/callback", methods=['POST'])
 
 def callback():
