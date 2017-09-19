@@ -267,16 +267,198 @@ def handle_message(event):
     print("event.reply_token:", event.reply_token)
     print("event.message.text:", event.message.text)
 
-    if(event.message.text == "電影"):
+    if event.message.text == "蘋果即時新聞":
+        content = apple_news()
         line_bot_api.reply_message(
             event.reply_token,
-            TextSendMessage(text="日新")
-        )
-    else:
+            TextSendMessage(text=content))
+        return 0
+    if event.message.text == "PTT 表特版 近期大於 10 推的文章":
+        content = ptt_beauty()
         line_bot_api.reply_message(
             event.reply_token,
-            TextSendMessage(text=event.message.text)
+            TextSendMessage(text=content))
+        return 0
+
+    if event.message.text == "近期熱門廢文":
+        content = ptt_hot()
+        line_bot_api.reply_message(
+            event.reply_token,
+            TextSendMessage(text=content))
+        return 0
+    if event.message.text == "即時廢文":
+        content = ptt_gossiping()
+        line_bot_api.reply_message(
+            event.reply_token,
+            TextSendMessage(text=content))
+        return 0
+    if event.message.text == "近期上映電影":
+        content = movie()
+        line_bot_api.reply_message(
+            event.reply_token,
+            TextSendMessage(text=content))
+        return 0
+    if event.message.text == "科技新報":
+        content = technews()
+        line_bot_api.reply_message(
+            event.reply_token,
+            TextSendMessage(text=content))
+        return 0
+    if event.message.text == "PanX泛科技":
+        content = panx()
+        line_bot_api.reply_message(
+            event.reply_token,
+            TextSendMessage(text=content))
+        return 0
+    if event.message.text == "開始玩":
+        buttons_template = TemplateSendMessage(
+            alt_text='開始玩 template',
+            template=ButtonsTemplate(
+                title='選擇服務',
+                text='請選擇',
+                thumbnail_image_url='https://i.imgur.com/xQF5dZT.jpg',
+                actions=[
+                    MessageTemplateAction(
+                        label='新聞',
+                        text='新聞'
+                    ),
+                    MessageTemplateAction(
+                        label='電影',
+                        text='電影'
+                    ),
+                    MessageTemplateAction(
+                        label='看廢文',
+                        text='看廢文'
+                    ),
+                    MessageTemplateAction(
+                        label='正妹',
+                        text='正妹'
+                    )
+                ]
+            )
         )
+        line_bot_api.reply_message(event.reply_token, buttons_template)
+        return 0
+    if event.message.text == "新聞":
+        buttons_template = TemplateSendMessage(
+            alt_text='新聞 template',
+            template=ButtonsTemplate(
+                title='新聞類型',
+                text='請選擇',
+                thumbnail_image_url='https://i.imgur.com/vkqbLnz.png',
+                actions=[
+                    MessageTemplateAction(
+                        label='蘋果即時新聞',
+                        text='蘋果即時新聞'
+                    ),
+                    MessageTemplateAction(
+                        label='科技新報',
+                        text='科技新報'
+                    ),
+                    MessageTemplateAction(
+                        label='PanX泛科技',
+                        text='PanX泛科技'
+                    )
+                ]
+            )
+        )
+        line_bot_api.reply_message(event.reply_token, buttons_template)
+        return 0
+    if event.message.text == "電影":
+        buttons_template = TemplateSendMessage(
+            alt_text='電影 template',
+            template=ButtonsTemplate(
+                title='服務類型',
+                text='請選擇',
+                thumbnail_image_url='https://i.imgur.com/sbOTJt4.png',
+                actions=[
+                    MessageTemplateAction(
+                        label='近期上映電影',
+                        text='近期上映電影'
+                    ),
+                    MessageTemplateAction(
+                        label='eyny',
+                        text='eyny'
+                    )
+                ]
+            )
+        )
+        line_bot_api.reply_message(event.reply_token, buttons_template)
+        return 0
+    if event.message.text == "看廢文":
+        buttons_template = TemplateSendMessage(
+            alt_text='看廢文 template',
+            template=ButtonsTemplate(
+                title='你媽知道你在看廢文嗎',
+                text='請選擇',
+                thumbnail_image_url='https://i.imgur.com/ocmxAdS.jpg',
+                actions=[
+                    MessageTemplateAction(
+                        label='近期熱門廢文',
+                        text='近期熱門廢文'
+                    ),
+                    MessageTemplateAction(
+                        label='即時廢文',
+                        text='即時廢文'
+                    )
+                ]
+            )
+        )
+        line_bot_api.reply_message(event.reply_token, buttons_template)
+        return 0
+    if event.message.text == "正妹":
+        buttons_template = TemplateSendMessage(
+            alt_text='正妹 template',
+            template=ButtonsTemplate(
+                title='選擇服務',
+                text='請選擇',
+                thumbnail_image_url='https://i.imgur.com/qKkE2bj.jpg',
+                actions=[
+                    MessageTemplateAction(
+                        label='PTT 表特版 近期大於 10 推的文章',
+                        text='PTT 表特版 近期大於 10 推的文章'
+                    ),
+                    MessageTemplateAction(
+                        label='來張 imgur 正妹圖片',
+                        text='來張 imgur 正妹圖片'
+                    ),
+                    MessageTemplateAction(
+                        label='隨便來張正妹圖片',
+                        text='隨便來張正妹圖片'
+                    )
+                ]
+            )
+        )
+        line_bot_api.reply_message(event.reply_token, buttons_template)
+        return 0
+
+    buttons_template = TemplateSendMessage(
+        alt_text='目錄 template',
+        template=ButtonsTemplate(
+            title='選擇服務',
+            text='請選擇',
+            thumbnail_image_url='https://i.imgur.com/kzi5kKy.jpg',
+            actions=[
+                MessageTemplateAction(
+                    label='開始玩',
+                    text='開始玩'
+                ),
+                URITemplateAction(
+                    label='影片介紹 阿肥bot',
+                    uri='https://youtu.be/1IxtWgWxtlE'
+                ),
+                URITemplateAction(
+                    label='如何建立自己的 Line Bot',
+                    uri='https://github.com/twtrubiks/line-bot-tutorial'
+                ),
+                URITemplateAction(
+                    label='聯絡作者',
+                    uri='https://www.facebook.com/TWTRubiks?ref=bookmarks'
+                )
+            ]
+        )
+    )
+    line_bot_api.reply_message(event.reply_token, buttons_template)
 
 
 
