@@ -1,7 +1,7 @@
 
 import configparser
 import requests
-
+import datetime
 from flask import Flask, request, abort
 
 
@@ -370,14 +370,13 @@ def getShowTimeChoiseMovie(choise_movie):
                 showTimeMoviesTimes[timelen].append(times[index].get_text())
 
     content = ""
-    # now = datetime.datetime.now().strftime("%H:%M")
-
-    now = "15:15"
+    content2 = ""
+    now = datetime.datetime.now().strftime("%H:%M")
     now = now.split(":")
     now = int(now[0]) * 100 + int(now[1])
     if choise_movie in showTimeMovies:
         movieIndex = showTimeMovies.index(choise_movie)
-        content += showTimeMovies[movieIndex] + "\n"
+        content += "[" + showTimeMovies[movieIndex] + "]\n"
         for index2 in range(len(showTimeMoviesTimes[index])):
             thisTime = showTimeMoviesTimes[index][index2]
             if thisTime.index("：") == 2:
@@ -385,9 +384,14 @@ def getShowTimeChoiseMovie(choise_movie):
                 thisTime = int(thisTime[0]) * 100 + int(thisTime[1])
                 if thisTime >= now:
                     if (index2 + 1) != len(showTimeMoviesTimes[index]):
-                        content += showTimeMoviesTimes[index][index2] + "\n"
+                        content2 += showTimeMoviesTimes[index][index2] + "\n"
                     else:
-                        content += showTimeMoviesTimes[index][index2] + "\n\n"
+                        content2 += showTimeMoviesTimes[index][index2] + "\n\n"
+
+        if content2 == "":
+            content2 = "今日已無場次"
+
+        content += content2
 
     else:
         content = "沒有這個電影上映"
