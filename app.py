@@ -590,22 +590,20 @@ def handle_message(event):
             TextSendMessage(text=content))
 
     if event.message.text == "秀泰電影 待會看":
+        content = getShowTimeMovies();
         actions = []
-        actions.append(MessageTemplateAction(
-            label='所有場次',
-            text='秀泰電影 所有場次'
-        ))
-        actions.append(MessageTemplateAction(
-            label='待會看',
-            text='秀泰電影 待會看'
-        ))
+        for movie in content:
+            actions.append(MessageTemplateAction(
+                label=movie,
+                text='秀泰電影 待會看 '+movie
+            ))
 
         buttons_template = TemplateSendMessage(
-            alt_text='秀泰電影 template',
+            alt_text='上映電影 template',
             template=ButtonsTemplate(
-                title='選擇秀泰服務',
-                text='請選擇',
-                thumbnail_image_url='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTHAf1HE8a6jBJf1yDZWZn-IyYqKyI-28N1ES2A7A-S6oTzX5Sznw',
+                title='選擇電影',
+                text='選擇待會想去看的電影',
+                thumbnail_image_url='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTFcK4kz9kCm_O97zz_KrEYii_3MdPnDfAeAR5cDnbuD6rk7W4N',
                 actions=actions
             )
         )
