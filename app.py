@@ -563,9 +563,9 @@ def handle_message(event):
     if event.message.text == "秀泰電影":
         actions = []
         actions.append(MessageTemplateAction(
-                        label='所有場次',
-                        text='秀泰電影 所有場次'
-                    ))
+            label='所有場次',
+            text='秀泰電影 所有場次'
+        ))
         actions.append(MessageTemplateAction(
             label='待會看',
             text='秀泰電影 待會看'
@@ -590,29 +590,19 @@ def handle_message(event):
             TextSendMessage(text=content))
     if event.message.text == "秀泰電影 待會看":
         movies = getShowTimeMovies();
+        actions = []
+        for movie in movies:
+            actions.append(MessageTemplateAction(
+                label=movie,
+                text='秀泰電影 待會看 '+movie
+            ))
+
         alt_text = '上映電影 template',
         template = ButtonsTemplate(
             title='選擇電影',
             text='選擇一部想看的電影',
             thumbnail_image_url='https://i.imgur.com/kzi5kKy.jpg',
-            actions=[
-                MessageTemplateAction(
-                    label='秀泰電影',
-                    text='秀泰電影'
-                ),
-                URITemplateAction(
-                    label='影片介紹 阿肥bot',
-                    uri='https://youtu.be/1IxtWgWxtlE'
-                ),
-                URITemplateAction(
-                    label='如何建立自己的 Line Bot',
-                    uri='https://github.com/twtrubiks/line-bot-tutorial'
-                ),
-                URITemplateAction(
-                    label='聯絡作者',
-                    uri='https://www.facebook.com/TWTRubiks?ref=bookmarks'
-                )
-            ]
+            actions=actions
 
         )
 
