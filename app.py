@@ -584,7 +584,7 @@ def handle_message(event):
         return 0
 
     if len(event.message.text) > 8 and event.message.text.find("秀泰電影 待會看") >= 0:
-        content = "sss";
+        content = getShowTimeChoiseMovie("狂獸");
         line_bot_api.reply_message(
             event.reply_token,
             TextSendMessage(text=content))
