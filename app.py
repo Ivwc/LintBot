@@ -591,11 +591,11 @@ def handle_message(event):
     if event.message.text == "秀泰電影 待會看":
         movies = getShowTimeMovies();
         actions = []
-        for movie in movies:
-            actions.append(MessageTemplateAction(
-                label=movie,
-                text='秀泰電影 待會看 '+movie
-            ))
+        # for movie in movies:
+        #     actions.append(MessageTemplateAction(
+        #         label=movie,
+        #         text='秀泰電影 待會看 '+movie
+        #     ))
 
         buttons_template = TemplateSendMessage(
             alt_text='上映電影 template',
