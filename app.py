@@ -583,32 +583,40 @@ def handle_message(event):
         line_bot_api.reply_message(event.reply_token, buttons_template)
         return 0
 
+    if len(event.message.text) > 10 and event.message.text.find("秀泰電影 所有場次")>=0:
+        content = "sss";
+        line_bot_api.reply_message(
+            event.reply_token,
+            TextSendMessage(text=content))
+
+
     if event.message.text == "秀泰電影 所有場次":
         content = getShowTimeMovie();
         line_bot_api.reply_message(
             event.reply_token,
             TextSendMessage(text=content))
 
-    if event.message.text == "秀泰電影 待會看":
-        content = getShowTimeMovies();
-        actions = []
-        for movie in content:
-            actions.append(MessageTemplateAction(
-                label=movie,
-                text='秀泰電影 待會看 '+movie
-            ))
 
-        buttons_template = TemplateSendMessage(
-            alt_text='上映電影 template',
-            template=ButtonsTemplate(
-                title='選擇電影',
-                text='選擇待會想去看的電影',
-                thumbnail_image_url='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTFcK4kz9kCm_O97zz_KrEYii_3MdPnDfAeAR5cDnbuD6rk7W4N',
-                actions=actions
-            )
-        )
-        line_bot_api.reply_message(event.reply_token, buttons_template)
-        return 0
+    # if event.message.text == "秀泰電影 待會看":
+    #     content = getShowTimeMovies();
+    #     actions = []
+    #     for movie in content:
+    #         actions.append(MessageTemplateAction(
+    #             label=movie,
+    #             text='秀泰電影 待會看 '+movie
+    #         ))
+    #
+    #     buttons_template = TemplateSendMessage(
+    #         alt_text='上映電影 template',
+    #         template=ButtonsTemplate(
+    #             title='選擇電影',
+    #             text='選擇待會想去看的電影',
+    #             thumbnail_image_url='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTFcK4kz9kCm_O97zz_KrEYii_3MdPnDfAeAR5cDnbuD6rk7W4N',
+    #             actions=actions
+    #         )
+    #     )
+    #     line_bot_api.reply_message(event.reply_token, buttons_template)
+    #     return 0
 
 
     buttons_template = TemplateSendMessage(
