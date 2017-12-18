@@ -311,6 +311,91 @@ def getShowTimeMovie():
 
     return content
 
+def getShowTimeMovies():
+    resp = requests.get('http://www.srm.com.tw/time/time.htm')
+    resp.encoding = "big5"
+    soup = BeautifulSoup(resp.text, "html.parser")
+    movies = soup.select('table')
+
+    # for movie in movies:
+    #     moveName = movie.find_all('tr')
+    #     print(moveName[1].find_all('td')[0].find_all('p')[1].get_text())
+
+    showTime = requests.get('http://www.atmovies.com.tw/showtime/t04410/a04/')
+    showTime.encoding = "utf-8"
+    soup2 = BeautifulSoup(showTime.text, "html.parser")
+    title = soup2.select('#theaterShowtimeTable')
+    showTimeMovies = []
+    for movie in title:
+        # 取得电影名称
+        movieName = movie.select('.filmTitle a')[0].get_text()
+        # 取得电影时刻
+        times = movie.select('li')[1].select('ul')[1].select('li')
+
+        # 判断电影名称是否已经在电影阵列里了
+        if movieName not in showTimeMovies:
+            # 不在的话就把电影名称放到电影阵列里
+            showTimeMovies.extend([movieName])
+
+    return showTimeMovies
+
+
+
+def getShowTimeChoiseMovie(choise_movie):
+    showTime = requests.get('http://www.atmovies.com.tw/showtime/t04410/a04/')
+    showTime.encoding = "utf-8"
+    soup2 = BeautifulSoup(showTime.text, "html.parser")
+    title = soup2.select('#theaterShowtimeTable')
+    showTimeMovies = []
+    showTimeMoviesTimes = []
+    timelen = -1
+    for movie in title:
+        # 取得电影名称
+        movieName = movie.select('.filmTitle a')[0].get_text()
+        # 取得电影时刻
+        times = movie.select('li')[1].select('ul')[1].select('li')
+
+        # 判断电影名称是否已经在电影阵列里了
+        if movieName not in showTimeMovies:
+            # 不在的话就把电影名称放到电影阵列里
+            showTimeMovies.extend([movieName])
+
+            # 帮时刻阵列创一个空间出来放电影的时刻
+            showTimeMoviesTimes.append([])
+            timelen = timelen + 1
+
+        # 把电影时刻塞到时刻阵列
+        for index in range(len(times)):
+            if index != (len(times) - 1):
+                showTimeMoviesTimes[timelen].append(times[index].get_text())
+
+    content = ""
+    # now = datetime.datetime.now().strftime("%H:%M")
+
+    now = "15:15"
+    now = now.split(":")
+    now = int(now[0]) * 100 + int(now[1])
+    if choise_movie in showTimeMovies:
+        movieIndex = showTimeMovies.index(choise_movie)
+        content += showTimeMovies[movieIndex] + "\n"
+        for index2 in range(len(showTimeMoviesTimes[index])):
+            thisTime = showTimeMoviesTimes[index][index2]
+            if thisTime.index("：") == 2:
+                thisTime = thisTime.split('：')
+                thisTime = int(thisTime[0]) * 100 + int(thisTime[1])
+                if thisTime >= now:
+                    if (index2 + 1) != len(showTimeMoviesTimes[index]):
+                        content += showTimeMoviesTimes[index][index2] + "\n"
+                    else:
+                        content += showTimeMoviesTimes[index][index2] + "\n\n"
+
+    else:
+        content = "沒有這個電影上映"
+
+
+
+    return content
+
 
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
@@ -470,28 +555,29 @@ def handle_message(event):
                         label='PTT 表特版 近期大於 10 推的文章',
                         text='PTT 表特版 近期大於 10 推的文章'
                     ),
-                    MessageTemplateAction(
-                        label='隨便來張正妹圖片',
-                        text='隨便來張正妹圖片'
-                    )
                 ]
             )
         )
         line_bot_api.reply_message(event.reply_token, buttons_template)
         return 0
     if event.message.text == "秀泰電影":
+        actions = []
+        actions.append(MessageTemplateAction(
+                        label='所有場次',
+                        text='秀泰電影 所有場次'
+                    ))
+        actions.append(MessageTemplateAction(
+            label='待會看',
+            text='秀泰電影 待會看'
+        ))
+
         buttons_template = TemplateSendMessage(
             alt_text='秀泰電影 template',
             template=ButtonsTemplate(
                 title='選擇秀泰服務',
                 text='請選擇',
                 thumbnail_image_url='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTHAf1HE8a6jBJf1yDZWZn-IyYqKyI-28N1ES2A7A-S6oTzX5Sznw',
-                actions=[
-                    MessageTemplateAction(
-                        label='所有場次',
-                        text='秀泰電影 所有場次'
-                    ),
-                ]
+                actions=actions
             )
         )
         line_bot_api.reply_message(event.reply_token, buttons_template)
@@ -502,6 +588,33 @@ def handle_message(event):
         line_bot_api.reply_message(
             event.reply_token,
             TextSendMessage(text=content))
+    if event.message.text == "秀泰電影 待會看":
+        movies = getShowTimeMovies();
+        alt_text = '上映電影 template',
+        template = ButtonsTemplate(
+            title='選擇電影',
+            text='選擇一部想看的電影',
+            thumbnail_image_url='https://i.imgur.com/kzi5kKy.jpg',
+            actions=[
+                MessageTemplateAction(
+                    label='秀泰電影',
+                    text='秀泰電影'
+                ),
+                URITemplateAction(
+                    label='影片介紹 阿肥bot',
+                    uri='https://youtu.be/1IxtWgWxtlE'
+                ),
+                URITemplateAction(
+                    label='如何建立自己的 Line Bot',
+                    uri='https://github.com/twtrubiks/line-bot-tutorial'
+                ),
+                URITemplateAction(
+                    label='聯絡作者',
+                    uri='https://www.facebook.com/TWTRubiks?ref=bookmarks'
+                )
+            ]
+
+        )
 
     buttons_template = TemplateSendMessage(
         alt_text='目錄 template',
