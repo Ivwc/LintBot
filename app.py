@@ -483,10 +483,6 @@ def handle_message(event):
         return 0
     if event.message.text == "秀泰电影":
         content = getShowTimeMovie();
-        # content="看你妈";
-        line_bot_api.reply_message(
-            event.reply_token,
-            TextSendMessage(text="正在帮你搜寻..."))
         line_bot_api.reply_message(
             event.reply_token,
             TextSendMessage(text=content))
