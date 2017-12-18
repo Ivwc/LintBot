@@ -261,6 +261,53 @@ def panx():
         content += '{}\n{}\n\n'.format(title, link)
     return content
 
+def getShowTimeMovie():
+    resp = requests.get('http://www.srm.com.tw/time/time.htm')
+    resp.encoding = "big5"
+    soup = BeautifulSoup(resp.text, "html.parser")
+    movies = soup.select('table')
+
+    # for movie in movies:
+    #     moveName = movie.find_all('tr')
+    #     print(moveName[1].find_all('td')[0].find_all('p')[1].get_text())
+
+    showTime = requests.get('http://www.atmovies.com.tw/showtime/t04410/a04/')
+    showTime.encoding = "utf-8"
+    soup2 = BeautifulSoup(showTime.text, "html.parser")
+    title = soup2.select('#theaterShowtimeTable')
+    showTimeMovies = []
+    showTimeMoviesTimes = []
+    timelen = -1
+    for movie in title:
+        # 取得电影名称
+        movieName = movie.select('.filmTitle a')[0].get_text()
+        # 取得电影时刻
+        times = movie.select('li')[1].select('ul')[1].select('li')
+
+        # 判断电影名称是否已经在电影阵列里了
+        if movieName not in showTimeMovies:
+            # 不在的话就把电影名称放到电影阵列里
+            showTimeMovies.extend([movieName])
+
+            # 帮时刻阵列创一个空间出来放电影的时刻
+            showTimeMoviesTimes.append([])
+            timelen = timelen + 1
+
+        # 把电影时刻塞到时刻阵列
+        for index in range(len(times)):
+            if index != (len(times) - 1):
+                showTimeMoviesTimes[timelen].append(times[index].get_text())
+
+    content = ""
+    for index in range(len(showTimeMovies)):
+        content += showTimeMovies[index] + "\n"
+        # print(showTimeMovies[index])
+        # print(showTimeMoviesTimes[index])
+        for time in showTimeMoviesTimes[index]:
+            content += time + "\n"
+
+    return content
+
 
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
@@ -430,6 +477,13 @@ def handle_message(event):
             )
         )
         line_bot_api.reply_message(event.reply_token, buttons_template)
+        return 0
+    if event.message.text == "秀泰电影":
+        content = getShowTimeMovie();
+        # content="看你妈";
+        line_bot_api.reply_message(
+            event.reply_token,
+            TextSendMessage(text=content))
         return 0
 
     buttons_template = TemplateSendMessage(
