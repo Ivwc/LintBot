@@ -303,8 +303,11 @@ def getShowTimeMovie():
         content += showTimeMovies[index] + "\n"
         # print(showTimeMovies[index])
         # print(showTimeMoviesTimes[index])
-        for time in showTimeMoviesTimes[index]:
-            content += time + "\n"
+        for index2 in range(len(showTimeMoviesTimes[index])):
+            if (index2 + 1) != len(showTimeMoviesTimes[index]):
+                content += showTimeMoviesTimes[index][index2] + "\n"
+            else:
+                content += showTimeMoviesTimes[index][index2] + "\n\n"
 
     return content
 
@@ -481,6 +484,9 @@ def handle_message(event):
     if event.message.text == "秀泰电影":
         content = getShowTimeMovie();
         # content="看你妈";
+        line_bot_api.reply_message(
+            event.reply_token,
+            TextSendMessage(text="正在帮你搜寻..."))
         line_bot_api.reply_message(
             event.reply_token,
             TextSendMessage(text=content))
