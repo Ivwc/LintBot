@@ -482,10 +482,6 @@ def handle_message(event):
         line_bot_api.reply_message(event.reply_token, buttons_template)
         return 0
     if event.message.text == "秀泰電影":
-        # content = getShowTimeMovie();
-        # line_bot_api.reply_message(
-        #     event.reply_token,
-        #     TextSendMessage(text=content))
         buttons_template = TemplateSendMessage(
             alt_text='秀泰電影 template',
             template=ButtonsTemplate(
@@ -510,6 +506,12 @@ def handle_message(event):
         )
         line_bot_api.reply_message(event.reply_token, buttons_template)
         return 0
+
+    if event.message.text == "秀泰電影 所有場次":
+        content = getShowTimeMovie();
+        line_bot_api.reply_message(
+            event.reply_token,
+            TextSendMessage(text=content))
 
     buttons_template = TemplateSendMessage(
         alt_text='目錄 template',
