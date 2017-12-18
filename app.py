@@ -590,7 +590,6 @@ def handle_message(event):
             TextSendMessage(text=content))
 
     if event.message.text == "秀泰電影 待會看":
-        # movies = getShowTimeMovies();
         actions = []
         actions.append(MessageTemplateAction(
             label='所有場次',
@@ -612,6 +611,7 @@ def handle_message(event):
         )
         line_bot_api.reply_message(event.reply_token, buttons_template)
         return 0
+
 
     buttons_template = TemplateSendMessage(
         alt_text='目錄 template',
