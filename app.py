@@ -583,7 +583,7 @@ def handle_message(event):
         line_bot_api.reply_message(event.reply_token, buttons_template)
         return 0
 
-    if len(event.message.text) > 10 and event.message.text.find("秀泰電影 所有場次")>=0:
+    if len(event.message.text) > 8 and event.message.text.find("秀泰電影 待會看") >= 0:
         content = "sss";
         line_bot_api.reply_message(
             event.reply_token,
