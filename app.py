@@ -482,10 +482,33 @@ def handle_message(event):
         line_bot_api.reply_message(event.reply_token, buttons_template)
         return 0
     if event.message.text == "秀泰電影":
-        content = getShowTimeMovie();
-        line_bot_api.reply_message(
-            event.reply_token,
-            TextSendMessage(text=content))
+        # content = getShowTimeMovie();
+        # line_bot_api.reply_message(
+        #     event.reply_token,
+        #     TextSendMessage(text=content))
+        buttons_template = TemplateSendMessage(
+            alt_text='秀泰電影 template',
+            template=ButtonsTemplate(
+                title='選擇秀泰服務',
+                text='請選擇',
+                thumbnail_image_url='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTHAf1HE8a6jBJf1yDZWZn-IyYqKyI-28N1ES2A7A-S6oTzX5Sznw',
+                actions=[
+                    MessageTemplateAction(
+                        label='所有場次',
+                        text='秀泰電影 所有場次'
+                    ),
+                    # MessageTemplateAction(
+                    #     label='來張 imgur 正妹圖片',
+                    #     text='來張 imgur 正妹圖片'
+                    # ),
+                    # MessageTemplateAction(
+                    #     label='隨便來張正妹圖片',
+                    #     text='隨便來張正妹圖片'
+                    # )
+                ]
+            )
+        )
+        line_bot_api.reply_message(event.reply_token, buttons_template)
         return 0
 
     buttons_template = TemplateSendMessage(
