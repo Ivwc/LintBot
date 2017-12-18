@@ -300,7 +300,7 @@ def getShowTimeMovie():
 
     content = ""
     for index in range(len(showTimeMovies)):
-        content += showTimeMovies[index] + "\n"
+        content += "[ "+showTimeMovies[index] + " ]\n"
         # print(showTimeMovies[index])
         # print(showTimeMoviesTimes[index])
         for index2 in range(len(showTimeMoviesTimes[index])):
@@ -324,6 +324,12 @@ def handle_message(event):
             TextSendMessage(text=content))
         return 0
     if event.message.text == "PTT 表特版 近期大於 10 推的文章":
+        content = ptt_beauty()
+        line_bot_api.reply_message(
+            event.reply_token,
+            TextSendMessage(text=content))
+        return 0
+    if event.message.text == "隨便來張正妹圖片":
         content = ptt_beauty()
         line_bot_api.reply_message(
             event.reply_token,
@@ -426,10 +432,6 @@ def handle_message(event):
                         label='近期上映電影',
                         text='近期上映電影'
                     ),
-                    MessageTemplateAction(
-                        label='eyny',
-                        text='eyny'
-                    )
                 ]
             )
         )
@@ -469,10 +471,6 @@ def handle_message(event):
                         text='PTT 表特版 近期大於 10 推的文章'
                     ),
                     MessageTemplateAction(
-                        label='來張 imgur 正妹圖片',
-                        text='來張 imgur 正妹圖片'
-                    ),
-                    MessageTemplateAction(
                         label='隨便來張正妹圖片',
                         text='隨便來張正妹圖片'
                     )
@@ -493,14 +491,6 @@ def handle_message(event):
                         label='所有場次',
                         text='秀泰電影 所有場次'
                     ),
-                    # MessageTemplateAction(
-                    #     label='來張 imgur 正妹圖片',
-                    #     text='來張 imgur 正妹圖片'
-                    # ),
-                    # MessageTemplateAction(
-                    #     label='隨便來張正妹圖片',
-                    #     text='隨便來張正妹圖片'
-                    # )
                 ]
             )
         )
