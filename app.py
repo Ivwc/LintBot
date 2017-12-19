@@ -377,16 +377,20 @@ def getShowTimeChoiseMovie(choise_movie):
     if choise_movie in showTimeMovies:
         movieIndex = showTimeMovies.index(choise_movie)
         content += "[" + showTimeMovies[movieIndex] + "]\n"
-        for index2 in range(len(showTimeMoviesTimes[index])):
-            thisTime = showTimeMoviesTimes[index][index2]
-            if thisTime.index("：") == 2:
-                thisTime = thisTime.split('：')
-                thisTime = int(thisTime[0]) * 100 + int(thisTime[1])
-                if thisTime >= now:
-                    if (index2 + 1) != len(showTimeMoviesTimes[index]):
-                        content2 += showTimeMoviesTimes[index][index2] + "\n"
-                    else:
-                        content2 += showTimeMoviesTimes[index][index2] + "\n\n"
+
+        for index2 in range(len(showTimeMoviesTimes[movieIndex])):
+            thisTime = showTimeMoviesTimes[movieIndex][index2]
+            try:
+                if thisTime.index("：") == 2:
+                    thisTime = thisTime.split('：')
+                    thisTime = int(thisTime[0]) * 100 + int(thisTime[1])
+                    if thisTime >= now:
+                        if (index2 + 1) != len(showTimeMoviesTimes[movieIndex]):
+                            content2 += showTimeMoviesTimes[movieIndex][index2] + "\n"
+                        else:
+                            content2 += showTimeMoviesTimes[movieIndex][index2] + "\n\n"
+            except ValueError:
+                content2 += showTimeMoviesTimes[movieIndex][index2] + "\n"
 
         if content2 == "":
             content2 = "今日已無場次"
