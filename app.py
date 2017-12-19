@@ -632,7 +632,7 @@ def handle_message(event):
     #     return 0
     line_bot_api.reply_message(
         event.reply_token,
-        TextSendMessage(text=event.message)
+        TextSendMessage(text=event.message.text)
     )
 
     buttons_template = TemplateSendMessage(
@@ -667,7 +667,12 @@ def handle_message(event):
     )
     line_bot_api.reply_message(event.reply_token, buttons_template)
 
-
+@handler.add(MessageEvent, message=LocationMessage)
+def handle_message(event):
+    line_bot_api.reply_message(
+        event.reply_token,
+        TextSendMessage(text="location get!!")
+    )
 
 if __name__ == '__main__':
     app.run()
