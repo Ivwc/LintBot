@@ -443,7 +443,7 @@ def getNearByRestaurant(lat,lng):
                 image = googleMapImage
 
             content.append({
-                "thumbnailImageUrl": googleMapImage,
+                "thumbnailImageUrl": "ss",
                 "imageBackgroundColor": "#FFFFFF",
                 "title": results[ranInt]['name'],
                 "text": results[ranInt]['name'],
@@ -745,54 +745,7 @@ def handle_message(event):
         template=CarouselTemplate(
             imageAspectRatio='rectangle',
             imageSize='cover',
-            columns=[
-                {
-                    "thumbnailImageUrl": "https://example.com/bot/images/item1.jpg",
-                    "imageBackgroundColor": "#FFFFFF",
-                    "title": "this is menu",
-                    "text": "description",
-                    "actions": [
-                        {
-                            "type": "postback",
-                            "label": "Buy",
-                            "data": "action=buy&itemid=111"
-                        },
-                        {
-                            "type": "postback",
-                            "label": "Add to cart",
-                            "data": "action=add&itemid=111"
-                        },
-                        {
-                            "type": "uri",
-                            "label": "View detail",
-                            "uri": "http://example.com/page/111"
-                        }
-                    ]
-                },
-                {
-                    "thumbnailImageUrl": "https://example.com/bot/images/item2.jpg",
-                    "imageBackgroundColor": "#000000",
-                    "title": "this is menu",
-                    "text": "description",
-                    "actions": [
-                        {
-                            "type": "postback",
-                            "label": "Buy",
-                            "data": "action=buy&itemid=222"
-                        },
-                        {
-                            "type": "postback",
-                            "label": "Add to cart",
-                            "data": "action=add&itemid=222"
-                        },
-                        {
-                            "type": "uri",
-                            "label": "View detail",
-                            "uri": "http://example.com/page/222"
-                        }
-                    ]
-                }
-            ]
+            columns=columns
         )
     )
     line_bot_api.reply_message(event.reply_token, Carousel_template)
