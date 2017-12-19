@@ -632,7 +632,7 @@ def handle_message(event):
     #     return 0
     line_bot_api.reply_message(
         event.reply_token,
-        TextSendMessage(text=event.message.address)
+        TextSendMessage(text=event.message)
     )
 
     buttons_template = TemplateSendMessage(
