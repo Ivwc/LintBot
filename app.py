@@ -370,35 +370,40 @@ def getShowTimeChoiseMovie(choise_movie):
                 showTimeMoviesTimes[timelen].append(times[index].get_text())
 
     content = ""
-    content2 = ""
     now = datetime.datetime.now().strftime("%H:%M")
     now = now.split(":")
     now = int(now[0]) * 100 + int(now[1])
-    if choise_movie in showTimeMovies:
-        movieIndex = showTimeMovies.index(choise_movie)
-        content += "[" + showTimeMovies[movieIndex] + "]\n"
+    choise_movie = choise_movie.split(" ")
+    choise_movie = choise_movie[len(choise_movie) - 1]
+    # 判斷有符合字串的電影
+    result = [a for a in showTimeMovies if a.find(choise_movie) >= 0]
+    if len(result) > 0:
+        for m in result:
+            movieIndex = showTimeMovies.index(m)
+            content += "[" + showTimeMovies[movieIndex] + "]\n"
 
-        for index2 in range(len(showTimeMoviesTimes[movieIndex])):
-            thisTime = showTimeMoviesTimes[movieIndex][index2]
-            try:
-                if thisTime.index("：") == 2:
-                    thisTime = thisTime.split('：')
-                    thisTime = int(thisTime[0]) * 100 + int(thisTime[1])
-                    if thisTime >= now:
-                        if (index2 + 1) != len(showTimeMoviesTimes[movieIndex]):
-                            content2 += showTimeMoviesTimes[movieIndex][index2] + "\n"
-                        else:
-                            content2 += showTimeMoviesTimes[movieIndex][index2] + "\n\n"
-            except ValueError:
-                content2 += showTimeMoviesTimes[movieIndex][index2] + "\n"
+            content2 = ""
+            for index2 in range(len(showTimeMoviesTimes[movieIndex])):
+                thisTime = showTimeMoviesTimes[movieIndex][index2]
+                try:
+                    if thisTime.index("：") == 2:
+                        thisTime = thisTime.split('：')
+                        thisTime = int(thisTime[0]) * 100 + int(thisTime[1])
+                        if thisTime >= now:
+                            if (index2 + 1) != len(showTimeMoviesTimes[movieIndex]):
+                                content2 += showTimeMoviesTimes[movieIndex][index2] + "\n"
+                            else:
+                                content2 += showTimeMoviesTimes[movieIndex][index2] + "\n\n"
+                except ValueError:
+                    content2 += showTimeMoviesTimes[movieIndex][index2] + "\n"
 
-        if content2 == "":
-            content2 = "今日已無場次"
+            if content2 == "":
+                content2 = "今日已無場次"
 
-        content += content2
+            content += content2
 
     else:
-        content = "沒有這個電影上映"
+        content = "找不到電影，請確認您輸入的電影名稱"
 
 
 
@@ -576,7 +581,7 @@ def handle_message(event):
         ))
         actions.append(MessageTemplateAction(
             label='待會看',
-            text='秀泰電影 待會看'
+            text='請輸入以下字串來搜尋待會看(電影名稱替換成您想要查看的電影)\n秀泰電影 待會看 電影名稱'
         ))
 
         buttons_template = TemplateSendMessage(
