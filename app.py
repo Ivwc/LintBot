@@ -671,7 +671,7 @@ def handle_message(event):
 def handle_message(event):
     line_bot_api.reply_message(
         event.reply_token,
-        TextSendMessage(text=event.message.address)
+        TextSendMessage(text=event.message.latitude+"/"+event.message.longitude)
     )
 
 if __name__ == '__main__':
