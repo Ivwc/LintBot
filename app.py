@@ -14,6 +14,7 @@ from linebot.exceptions import (
 from linebot.models import *
 
 from bs4 import BeautifulSoup
+import random
 
 
 app = Flask(__name__)
@@ -409,6 +410,75 @@ def getShowTimeChoiseMovie(choise_movie):
 
     return content
 
+def getNearByRestaurant(lat,lng):
+    # location使用者的位置  radius範圍 key谷歌APIKEY type要尋找的景點類型 opennow有在營業
+    googleMap = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location="+lat+","+lng+"&radius=300&key=AIzaSyAQd44RuqDMGHr5Uz58jMlLWYzrOpdV0gA&type=restaurant&opennow"
+    googleMapImage = "https://maps.googleapis.com/maps/api/place/photo?key=AIzaSyAQd44RuqDMGHr5Uz58jMlLWYzrOpdV0gA"
+    res = requests.get(googleMap)
+    status = res.json()['status']
+    results = res.json()['results']
+    requestsLen = len(results) - 1
+    content = []
+    if status == "OK":
+        indexArr = []
+        # 隨機取出5筆店家
+        for index in range(5):
+            # 隨機產生0~API回吐的數量
+            ranInt = random.randint(0, requestsLen)
+            # 因為要取出五筆資料但是不重複，所以要判斷是否已經有在arr裡面了
+            while ranInt in indexArr:
+                ranInt = random.randint(0, requestsLen)
+            indexArr.append(ranInt)
+            print("==================================")
+            image = ""
+            # 判斷是否有photo
+            if 'photos' in results[ranInt].keys():
+                height = str(results[ranInt]['photos'][0]['height'])
+                width = str(results[ranInt]['photos'][0]['width'])
+                reference = results[ranInt]['photos'][0]['photo_reference']
+                googleMapImage = googleMapImage + "&photoreference=" + reference + "&maxheight=" + height + "&maxwidth=" + width
+                # image = requests.get(googleMapImage)
+                # print(googleMapImage)
+                # print(image)
+                image = googleMapImage
+
+            content.append({
+                "thumbnailImageUrl": googleMapImage,
+                "imageBackgroundColor": "#FFFFFF",
+                "title": results[ranInt]['name'],
+                "text": results[ranInt]['name'],
+                "actions": [
+                    {
+                        "type": "postback",
+                        "label": "Buy",
+                        "data": "action=buy&itemid=111"
+                    },
+                    {
+                        "type": "postback",
+                        "label": "Add to cart",
+                        "data": "action=add&itemid=111"
+                    },
+                    {
+                        "type": "uri",
+                        "label": "View detail",
+                        "uri": "http://example.com/page/111"
+                    }
+                ]
+            })
+
+
+
+
+
+    elif res.json()['status'] == "ZERO_RESULTS":
+        content += "沒有資料"
+    else:
+        content += "發生錯誤請聯絡管理員"
+
+
+
+    return content
+
 
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
@@ -669,10 +739,16 @@ def handle_message(event):
 
 @handler.add(MessageEvent, message=LocationMessage)
 def handle_message(event):
-    line_bot_api.reply_message(
-        event.reply_token,
-        TextSendMessage(text=str(event.message.latitude)+"/"+str(event.message.longitude))
+    columns = getNearByRestaurant(str(event.message.latitude),str(event.message.longitude))
+    Carousel_template = TemplateSendMessage(
+        alt_text='餐廳 template',
+        template=CarouselTemplate(
+            imageAspectRatio='rectangle',
+            imageSize='cover',
+            columns=columns
+        )
     )
+    line_bot_api.reply_message(event.reply_token, Carousel_template)
 
 if __name__ == '__main__':
     app.run()
