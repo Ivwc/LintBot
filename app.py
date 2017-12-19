@@ -581,7 +581,7 @@ def handle_message(event):
         ))
         actions.append(MessageTemplateAction(
             label='待會看',
-            text='請輸入以下字串來搜尋待會看(電影名稱替換成您想要查看的電影)\n秀泰電影 待會看 電影名稱'
+            text='請輸入[秀泰電影 待會看 電影名稱]，電影名稱替換成您想要找的電影，即可搜尋今天還可以看的場次。'
         ))
 
         buttons_template = TemplateSendMessage(
@@ -642,6 +642,10 @@ def handle_message(event):
                 MessageTemplateAction(
                     label='秀泰電影',
                     text='秀泰電影'
+                ),
+                MessageTemplateAction(
+                    label='開始玩',
+                    text='開始玩',
                 ),
                 # URITemplateAction(
                 #     label='影片介紹 阿肥bot',
