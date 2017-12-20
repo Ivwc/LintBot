@@ -443,12 +443,14 @@ def getNearByRestaurant(lat,lng):
                 # print(googleMapImage)
                 # print(image)
                 # image = googleMapImage
-
+            rating = "無評價"
+            if 'rating' in results[ranInt].keys():
+                rating = "評價: " + str(results[ranInt]['rating'])
             content.append({
                 "thumbnailImageUrl": image,
                 "imageBackgroundColor": "#FFFFFF",
                 "title": results[ranInt]['name'],
-                "text": "評價: "+str(results[ranInt]['rating']),
+                "text": "評價: "+rating,
                 "actions": [
                     {
                         "type": "uri",
