@@ -422,7 +422,7 @@ def getNearByRestaurant(lat,lng):
     if status == "OK":
         indexArr = []
         # 隨機取出5筆店家
-        for index in range(5):
+        for index in range(10):
             # 隨機產生0~API回吐的數量
             ranInt = random.randint(0, requestsLen)
             # 因為要取出五筆資料但是不重複，所以要判斷是否已經有在arr裡面了
