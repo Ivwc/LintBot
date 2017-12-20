@@ -740,8 +740,9 @@ def handle_message(event):
 @handler.add(MessageEvent, message=LocationMessage)
 def handle_message(event):
     res = getNearByRestaurant(str(event.message.latitude),str(event.message.longitude))
-    columns = [
-        {
+    columns = []
+    for r in res:
+        columns.append({
             "thumbnailImageUrl": "https://example.com/bot/images/item1.jpg",
             "imageBackgroundColor": "#FFFFFF",
             "title": "this is menu",
@@ -763,148 +764,7 @@ def handle_message(event):
                     "uri": "http://example.com/page/111"
                 }
             ]
-        },
-        {
-            "thumbnailImageUrl": "https://example.com/bot/images/item1.jpg",
-            "imageBackgroundColor": "#FFFFFF",
-            "title": "this is menu",
-            "text": "description",
-            "actions": [
-                {
-                    "type": "postback",
-                    "label": "Buy",
-                    "data": "action=buy&itemid=111"
-                },
-                {
-                    "type": "postback",
-                    "label": "Add to cart",
-                    "data": "action=add&itemid=111"
-                },
-                {
-                    "type": "uri",
-                    "label": "View detail",
-                    "uri": "http://example.com/page/111"
-                }
-            ]
-        },
-        {
-            "thumbnailImageUrl": "https://example.com/bot/images/item1.jpg",
-            "imageBackgroundColor": "#FFFFFF",
-            "title": "this is menu",
-            "text": "description",
-            "actions": [
-                {
-                    "type": "postback",
-                    "label": "Buy",
-                    "data": "action=buy&itemid=111"
-                },
-                {
-                    "type": "postback",
-                    "label": "Add to cart",
-                    "data": "action=add&itemid=111"
-                },
-                {
-                    "type": "uri",
-                    "label": "View detail",
-                    "uri": "http://example.com/page/111"
-                }
-            ]
-        },
-        {
-            "thumbnailImageUrl": "https://example.com/bot/images/item1.jpg",
-            "imageBackgroundColor": "#FFFFFF",
-            "title": "this is menu",
-            "text": "description",
-            "actions": [
-                {
-                    "type": "postback",
-                    "label": "Buy",
-                    "data": "action=buy&itemid=111"
-                },
-                {
-                    "type": "postback",
-                    "label": "Add to cart",
-                    "data": "action=add&itemid=111"
-                },
-                {
-                    "type": "uri",
-                    "label": "View detail",
-                    "uri": "http://example.com/page/111"
-                }
-            ]
-        },
-        {
-            "thumbnailImageUrl": "https://example.com/bot/images/item1.jpg",
-            "imageBackgroundColor": "#FFFFFF",
-            "title": "this is menu",
-            "text": "description",
-            "actions": [
-                {
-                    "type": "postback",
-                    "label": "Buy",
-                    "data": "action=buy&itemid=111"
-                },
-                {
-                    "type": "postback",
-                    "label": "Add to cart",
-                    "data": "action=add&itemid=111"
-                },
-                {
-                    "type": "uri",
-                    "label": "View detail",
-                    "uri": "http://example.com/page/111"
-                }
-            ]
-        },
-        {
-            "thumbnailImageUrl": "https://example.com/bot/images/item1.jpg",
-            "imageBackgroundColor": "#FFFFFF",
-            "title": "this is menu",
-            "text": "description",
-            "actions": [
-                {
-                    "type": "postback",
-                    "label": "Buy",
-                    "data": "action=buy&itemid=111"
-                },
-                {
-                    "type": "postback",
-                    "label": "Add to cart",
-                    "data": "action=add&itemid=111"
-                },
-                {
-                    "type": "uri",
-                    "label": "View detail",
-                    "uri": "http://example.com/page/111"
-                }
-            ]
-        },
-        {
-            "thumbnailImageUrl": "https://example.com/bot/images/item1.jpg",
-            "imageBackgroundColor": "#FFFFFF",
-            "title": "this is menu",
-            "text": "description",
-            "actions": [
-                {
-                    "type": "postback",
-                    "label": "Buy",
-                    "data": "action=buy&itemid=111"
-                },
-                {
-                    "type": "postback",
-                    "label": "Add to cart",
-                    "data": "action=add&itemid=111"
-                },
-                {
-                    "type": "uri",
-                    "label": "View detail",
-                    "uri": "http://example.com/page/111"
-                }
-            ]
-        }
-    ]
-    # for r in res:
-    #     columns.append(r)
+        })
     Carousel_template = TemplateSendMessage(
         alt_text='餐廳 template',
         template=CarouselTemplate(
