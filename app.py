@@ -741,7 +741,7 @@ def handle_message(event):
                 {
                     "type": "url",
                     "label": "查看位置",
-                    "uri": r['actions'][0]['uri']
+                    "uri": "https://www.google.com.tw/maps/place/24.140522,120.646572"
                 },
             ]
         })
