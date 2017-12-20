@@ -451,7 +451,7 @@ def getNearByRestaurant(lat,lng):
                     {
                         "type": "uri",
                         "label": "查看位置",
-                        "uri": "https://www.google.com.tw/maps/place/"+lat+","+lng
+                        "uri": "https://www.google.com.tw/maps/place/"+str(results[ranInt]['geometry']['location']['lat'])+","+str(results[ranInt]['geometry']['location']['lng'])
                     }
                 ]
             })
@@ -740,8 +740,8 @@ def handle_message(event):
             "actions": [
                 {
                     "type": "uri",
-                    "label": "View detail",
-                    "uri": "http://example.com/page/111"
+                    "label": "查看位置",
+                    "uri": r['actions'][0]['uri']
                 }
             ]
         })
