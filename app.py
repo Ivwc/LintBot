@@ -412,7 +412,7 @@ def getShowTimeChoiseMovie(choise_movie):
 
 def getNearByRestaurant(lat,lng):
     # location使用者的位置  radius範圍 key谷歌APIKEY type要尋找的景點類型 opennow有在營業
-    googleMap = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location="+lat+","+lng+"&radius=300&key=AIzaSyAQd44RuqDMGHr5Uz58jMlLWYzrOpdV0gA&type=restaurant&opennow"
+    googleMap = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location="+lat+","+lng+"&radius=300&key=AIzaSyAQd44RuqDMGHr5Uz58jMlLWYzrOpdV0gA&type=restaurant&opennow&language=zh-TW"
     googleMapImage = "https://maps.googleapis.com/maps/api/place/photo?key=AIzaSyAQd44RuqDMGHr5Uz58jMlLWYzrOpdV0gA"
     res = requests.get(googleMap)
     status = res.json()['status']
