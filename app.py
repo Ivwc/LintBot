@@ -657,17 +657,22 @@ def handle_message(event):
         return 0
 
     if len(event.message.text) > 8 and event.message.text.find("秀泰電影 待會看") >= 0:
-        content = getShowTimeChoiseMovie(event.message.text);
+        content = getShowTimeChoiseMovie(event.message.text)
         line_bot_api.reply_message(
             event.reply_token,
             TextSendMessage(text=content))
 
 
     if event.message.text == "秀泰電影 所有場次":
-        content = getShowTimeMovie();
+        content = getShowTimeMovie()
         line_bot_api.reply_message(
             event.reply_token,
             TextSendMessage(text=content))
+
+    if event.message.text == "找餐廳":
+        line_bot_api.reply_message(
+            event.reply_token,
+            TextSendMessage(text="請使用Line的 '傳送位置' 訊息功能，即可搜尋出附近的餐廳。"))
 
 
     # if event.message.text == "秀泰電影 待會看":
@@ -706,6 +711,10 @@ def handle_message(event):
                     MessageTemplateAction(
                         label='開始玩',
                         text='開始玩',
+                    ),
+                    MessageTemplateAction(
+                        label='找餐廳',
+                        text='找餐廳',
                     ),
                     # URITemplateAction(
                     #     label='影片介紹 阿肥bot',
