@@ -743,7 +743,7 @@ def handle_message(event):
     columns = []
     for r in res:
         columns.append({
-            "thumbnailImageUrl": r['thumbnailImageUrl'],
+            "thumbnailImageUrl": 'https://example.com/bot/images/item1.jpg',
             "imageBackgroundColor": "#FFFFFF",
             "title": r['title'],
             "text": r['text'],
