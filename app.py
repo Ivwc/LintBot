@@ -697,7 +697,7 @@ def handle_message(event):
             template=ButtonsTemplate(
                 title='選擇服務',
                 text='請選擇',
-                thumbnail_image_url='https://i.imgur.com/kzi5kKy.jpg',
+                thumbnail_image_url='https://i.ytimg.com/vi/_TVMVbTC0U0/maxresdefault.jpg',
                 actions=[
                     MessageTemplateAction(
                         label='秀泰電影',
