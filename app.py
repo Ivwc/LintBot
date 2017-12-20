@@ -739,10 +739,20 @@ def handle_message(event):
             "text": r['text'],
             "actions": [
                 {
-                    "type": "url",
-                    "label": "查看位置",
-                    "uri": "https://www.google.com.tw/maps/place/24.140522,120.646572"
+                    "type": "postback",
+                    "label": "Buy",
+                    "data": "action=buy&itemid=111"
                 },
+                {
+                    "type": "postback",
+                    "label": "Add to cart",
+                    "data": "action=add&itemid=111"
+                },
+                {
+                    "type": "uri",
+                    "label": "View detail",
+                    "uri": "http://example.com/page/111"
+                }
             ]
         })
     Carousel_template = TemplateSendMessage(
