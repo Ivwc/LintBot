@@ -372,16 +372,16 @@ def getShowTimeChoiseMovie(choise_movie):
 
     content = ""
     nowtime = datetime.datetime.now().strftime("%H:%M")
-    now = nowtime.split(":")
+    nowArr = nowtime.split(":")
     # heroku時區是+0 不是台灣的+8
-    now = (int(now[0]) + 8) * 100 + int(now[1])
+    now = (int(nowArr[0]) + 8) * 100 + int(nowArr[1])
     choise_movie = choise_movie.split(" ")
     choise_movie = choise_movie[len(choise_movie) - 1]
     # 判斷有符合字串的電影
     result = [a for a in showTimeMovies if a.find(choise_movie) >= 0]
     if len(result) > 0:
         for m in result:
-            content += "現在時間 " + str(int(now[0]) + 8)+":"+ str(now[1])+ "\n"
+            content += "現在時間 " + str(int(nowArr[0]) + 8)+":"+ str(nowArr[1])+ "\n"
             movieIndex = showTimeMovies.index(m)
             content += "[" + showTimeMovies[movieIndex] + "]\n"
 
