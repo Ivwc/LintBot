@@ -423,7 +423,7 @@ def getNearByRestaurant(lat,lng):
     content = []
     if status == "OK":
         indexArr = []
-        # 隨機取出5筆店家
+        # 隨機取出10筆店家
         for index in range(10):
             # 隨機產生0~API回吐的數量
             ranInt = random.randint(0, requestsLen)
@@ -448,7 +448,7 @@ def getNearByRestaurant(lat,lng):
                 "thumbnailImageUrl": image,
                 "imageBackgroundColor": "#FFFFFF",
                 "title": results[ranInt]['name'],
-                "text": results[ranInt]['name'],
+                "text": "評價: "+str(results[ranInt]['rating']),
                 "actions": [
                     {
                         "type": "uri",
