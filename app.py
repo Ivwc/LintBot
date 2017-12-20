@@ -449,19 +449,9 @@ def getNearByRestaurant(lat,lng):
                 "text": results[ranInt]['name'],
                 "actions": [
                     {
-                        "type": "postback",
-                        "label": "Buy",
-                        "data": "action=buy&itemid=111"
-                    },
-                    {
-                        "type": "postback",
-                        "label": "Add to cart",
-                        "data": "action=add&itemid=111"
-                    },
-                    {
                         "type": "uri",
-                        "label": "View detail",
-                        "uri": "http://example.com/page/111"
+                        "label": "查看位置",
+                        "uri": "https://www.google.com.tw/maps/place/"+lat+","+lng
                     }
                 ]
             })
@@ -743,26 +733,16 @@ def handle_message(event):
     columns = []
     for r in res:
         columns.append({
-            "thumbnailImageUrl": r['thumbnailImageUrl'],
+            "thumbnailImageUrl": 'https://example.com/bot/images/item1.jpg',
             "imageBackgroundColor": "#FFFFFF",
             "title": r['title'],
             "text": r['text'],
             "actions": [
                 {
-                    "type": "postback",
-                    "label": "Buy",
-                    "data": "action=buy&itemid=111"
+                    "type": "url",
+                    "label": "查看位置",
+                    "data": r['actions'][0]['data']
                 },
-                {
-                    "type": "postback",
-                    "label": "Add to cart",
-                    "data": "action=add&itemid=111"
-                },
-                {
-                    "type": "uri",
-                    "label": "View detail",
-                    "uri": "http://example.com/page/111"
-                }
             ]
         })
     Carousel_template = TemplateSendMessage(
