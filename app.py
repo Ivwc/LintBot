@@ -741,7 +741,7 @@ def handle_message(event):
                 {
                     "type": "url",
                     "label": "查看位置",
-                    "data": r['actions'][0]['data']
+                    "url": r['actions'][0]['url']
                 },
             ]
         })
