@@ -373,7 +373,8 @@ def getShowTimeChoiseMovie(choise_movie):
     content = ""
     nowtime = datetime.datetime.now().strftime("%H:%M")
     now = nowtime.split(":")
-    now = int(now[0]) * 100 + int(now[1])
+    # heroku時區是+0 不是台灣的+8
+    now = (int(now[0]) + 8) * 100 + int(now[1])
     choise_movie = choise_movie.split(" ")
     choise_movie = choise_movie[len(choise_movie) - 1]
     # 判斷有符合字串的電影
