@@ -903,8 +903,8 @@ def handle_message(event):
             ]
         }
     ]
-    for r in res:
-        columns.append(r)
+    # for r in res:
+    #     columns.append(r)
     Carousel_template = TemplateSendMessage(
         alt_text='餐廳 template',
         template=CarouselTemplate(
