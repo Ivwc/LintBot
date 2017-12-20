@@ -381,7 +381,7 @@ def getShowTimeChoiseMovie(choise_movie):
     result = [a for a in showTimeMovies if a.find(choise_movie) >= 0]
     if len(result) > 0:
         for m in result:
-            content += "現在時間 " + nowtime + "\n"
+            content += "現在時間 " + str(int(now[0]) + 8)+":"+ now[1]+ "\n"
             movieIndex = showTimeMovies.index(m)
             content += "[" + showTimeMovies[movieIndex] + "]\n"
 
