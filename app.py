@@ -739,7 +739,10 @@ def handle_message(event):
 
 @handler.add(MessageEvent, message=LocationMessage)
 def handle_message(event):
-    columns = getNearByRestaurant(str(event.message.latitude),str(event.message.longitude))
+    res = getNearByRestaurant(str(event.message.latitude),str(event.message.longitude))
+    columns = []
+    for r in res:
+        columns.append(r)
     Carousel_template = TemplateSendMessage(
         alt_text='餐廳 template',
         template=CarouselTemplate(
@@ -748,6 +751,7 @@ def handle_message(event):
             columns=columns
         )
     )
+
     line_bot_api.reply_message(event.reply_token, Carousel_template)
 
 if __name__ == '__main__':
