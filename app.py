@@ -443,7 +443,7 @@ def getNearByRestaurant(lat,lng):
                 image = googleMapImage
 
             content.append({
-                "thumbnailImageUrl": "ss",
+                "thumbnailImageUrl": googleMapImage,
                 "imageBackgroundColor": "#FFFFFF",
                 "title": results[ranInt]['name'],
                 "text": results[ranInt]['name'],
@@ -743,10 +743,10 @@ def handle_message(event):
     columns = []
     for r in res:
         columns.append({
-            "thumbnailImageUrl": "https://example.com/bot/images/item1.jpg",
+            "thumbnailImageUrl": r['thumbnailImageUrl'],
             "imageBackgroundColor": "#FFFFFF",
-            "title": "this is menu",
-            "text": "description",
+            "title": r['title'],
+            "text": r['text'],
             "actions": [
                 {
                     "type": "postback",
