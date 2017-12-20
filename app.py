@@ -450,7 +450,7 @@ def getNearByRestaurant(lat,lng):
                 "thumbnailImageUrl": image,
                 "imageBackgroundColor": "#FFFFFF",
                 "title": results[ranInt]['name'],
-                "text": "評價: "+rating,
+                "text": rating,
                 "actions": [
                     {
                         "type": "uri",
