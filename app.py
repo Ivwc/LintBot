@@ -371,8 +371,8 @@ def getShowTimeChoiseMovie(choise_movie):
                 showTimeMoviesTimes[timelen].append(times[index].get_text())
 
     content = ""
-    now = datetime.datetime.now().strftime("%H:%M")
-    now = now.split(":")
+    nowtime = datetime.datetime.now().strftime("%H:%M")
+    now = nowtime.split(":")
     now = int(now[0]) * 100 + int(now[1])
     choise_movie = choise_movie.split(" ")
     choise_movie = choise_movie[len(choise_movie) - 1]
@@ -380,6 +380,7 @@ def getShowTimeChoiseMovie(choise_movie):
     result = [a for a in showTimeMovies if a.find(choise_movie) >= 0]
     if len(result) > 0:
         for m in result:
+            content += "現在時間 " + nowtime + "\n"
             movieIndex = showTimeMovies.index(m)
             content += "[" + showTimeMovies[movieIndex] + "]\n"
 
